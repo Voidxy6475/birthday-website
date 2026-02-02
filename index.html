@@ -158,6 +158,121 @@
             animation: none;
         }
 
+        /* ===== MUSIC SPLASH SCREEN ===== */
+        .music-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFD1E8 0%, #FFC0D9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .music-splash.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .music-splash-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .music-splash-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .music-splash-content h2 {
+            font-size: 2.5rem;
+            color: #3D2E3D;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .music-splash-content p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .music-splash-btn {
+            background: linear-gradient(135deg, #FF6B95 0%, #FF5A88 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .music-splash-btn:hover {
+            background: linear-gradient(135deg, #FF5A88 0%, #FF4978 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+        }
+
+        .music-splash-btn-skip {
+            background: transparent;
+            color: #999;
+            border: 2px solid #ddd;
+            padding: 12px 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .music-splash-btn-skip:hover {
+            border-color: #FF6B95;
+            color: #FF6B95;
+        }
+
         /* ===== PAGE CONTENT ===== */
         .page {
             display: none;
@@ -934,8 +1049,19 @@
     <button class="back-button" id="backButton" onclick="goToPage('home')">←</button>
 
     <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
+        <source src="Birthday Song Piano cover (Happy birthday to me XD).mp3" type="audio/mpeg">
     </audio>
+
+    <!-- MUSIC SPLASH SCREEN -->
+    <div id="musicSplash" class="music-splash show">
+        <div class="music-splash-content">
+            <div class="music-splash-icon">🎵</div>
+            <h2>Halo Sayang! 💕</h2>
+            <p>Aku sudah siapkan musik spesial untuk harimu</p>
+            <button class="music-splash-btn" onclick="startMusicAndCloseSplash()">Putar Musik ▶️</button>
+            <button class="music-splash-btn-skip" onclick="skipMusicSplash()">Lewati</button>
+        </div>
+    </div>
 
     <button id="musicBtn" class="audio-control">🎵</button>
 
@@ -950,7 +1076,7 @@
 
             <div class="hero-content">
                 <div class="hero-text">
-                    <h2>HALO SEYA,</h2>
+                    <h2>HALO SAYANG,</h2>
                     <h1>SELAMAT<span>ULANG TAHUN! 🎂</span></h1>
                 </div>
                 <div class="hero-image">
@@ -967,7 +1093,7 @@
             <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
             <div class="floating-decoration size-4" style="top: 14%; left: 3%;">🎉</div>
              <div class="floating-decoration size-5" style="top: 13%; right: 25%;">🎀</div>
-            <div class="floating-decoration size-3" style="top: 10%; right: 1%;">✨</div>
+            <div class="floating-decoration size-3" style="top: 50%; right: 1%;">✨</div>
             <div class="floating-decoration size-5" style="bottom: 13%; left: 25%;">🎀</div>
            
 
@@ -1017,7 +1143,7 @@
             <div class="im-so-glad-content">
                 <div class="im-so-glad-text">
                     <h2>AKU BEGITU<br>BERUNTUNG</h2>
-                    <p>memilikimu dalam hidupku, kamu memiliki hati emas dan jiwa yang memancarkan kehangatan serta kebaikan. Kamu adalah orang paling cantik yang pernah aku kenal, baik dari dalam maupun dari luar. 💕</p>
+                    <p>memilikimu dalam hidupku dan bisa memanggilmu pacarku, kamu memiliki hati emas dan jiwa yang memancarkan kehangatan serta kebaikan. Kamu adalah orang paling cantik yang pernah aku kenal, baik dari dalam maupun dari luar. 💕</p>
                     <p>aku ingin meluangkan waktu untuk memberitahumu betapa berarti dirimu bagiku. Kamu adalah berkah terbesar dalam hidupku dan orang favorit di dunia ini.</p>
                 </div>
                 <div class="im-so-glad-image">
@@ -1036,7 +1162,7 @@
             <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
             <div class="floating-decoration size-4" style="top: 4%; left: 3%;">🌹</div>
             <div class="floating-decoration size-3" style="top: 30%; right: 4%;">💕</div>
-            <div class="floating-decoration size-5" style="bottom: 15%; left: 8%;">✨</div>
+            <div class="floating-decoration size-5" style="bottom: 30%; left: 8%;">✨</div>
              <div class="floating-decoration size-4" style="bottom: 5%; right: 10%;">✨</div>
 
             <div class="once-again-content">
@@ -1048,7 +1174,7 @@
                 </div>
                 <div class="once-again-text">
                     <h2>SELAMANYA<br>BERSAMA<br>DIRIMU 💞</h2>
-                    <p>Selamat ulang tahun untuk cintaku, sahabat terbaikku, belahan jiwaku, dan partner petualanganku. Terima kasih sudah menjadi sahabat yang luar biasa, mencintaiku tanpa syarat, dan menjadi orang paling menakjubkan yang pernah aku temui.</p>
+                    <p>Selamat ulang tahun untuk cinta hidupku, sahabat terbaikku, belahan jiwaku, dan partner petualanganku. Terima kasih sudah menjadi pacar yang luar biasa, mencintaiku tanpa syarat, dan menjadi orang paling menakjubkan yang pernah aku temui.</p>
                     <p>aku ingin memberikanmu semua cinta, kebahagiaan, dan kesuksesan di dunia. Semoga semua mimpi dan harapanmu terwujud, dan semoga tahun ini penuh dengan petualangan baru dan momen-momen tak terlupakan. aku tidak sabar untuk merayakan banyak ulang tahunmu lagi dan menciptakan kenangan indah bersama.</p>
                     <p>semoga harimu penuh dengan kegembiraan dan cinta yang kamu layak dapatkan. Aku mencintaimu lebih dari yang bisa diekspresikan dengan kata-kata 💗</p>
                 </div>
@@ -1081,7 +1207,7 @@
                     <div class="coupon-main">
                         <div class="coupon-label">KUPON CINTA</div>
                         <div class="coupon-title">MAKAN MALAM ROMANTIS</div>
-                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2025</div>
                         <div class="coupon-hole top"></div>
                         <div class="coupon-hole bottom"></div>
                     </div>
@@ -1092,7 +1218,7 @@
                     <div class="coupon-main">
                         <div class="coupon-label">KUPON CINTA</div>
                         <div class="coupon-title">SHOPPING SPREE GRATIS</div>
-                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2025</div>
                         <div class="coupon-hole top"></div>
                         <div class="coupon-hole bottom"></div>
                     </div>
@@ -1103,7 +1229,7 @@
                     <div class="coupon-main">
                         <div class="coupon-label">KUPON CINTA</div>
                         <div class="coupon-title">HADIAH PILIHAN KAMI</div>
-                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2025</div>
                         <div class="coupon-hole top"></div>
                         <div class="coupon-hole bottom"></div>
                     </div>
@@ -1114,7 +1240,7 @@
                     <div class="coupon-main">
                         <div class="coupon-label">KUPON CINTA</div>
                         <div class="coupon-title">LIBURAN AKHIR PEKAN</div>
-                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2025</div>
                         <div class="coupon-hole top"></div>
                         <div class="coupon-hole bottom"></div>
                     </div>
@@ -1292,7 +1418,7 @@
             <h2>💌 SURAT CINTA</h2>
             <p>Sayang,</p>
             <p>Di hari yang istimewa ini, aku ingin mengatakan bahwa kamu adalah hadiah terbesar dalam hidupku. Setiap senyum, setiap tawa, setiap momen bersama kamu adalah kenangan yang akan aku hargai selamanya. 💕</p>
-            <p>Kamu membuat hidup menjadi lebih indah, lebih bermakna, dan lebih penuh warna. Terima kasih telah menjadi bagian dari perjalanan hidupku dan menjadi salah satu alasan terbesar kebahagiaanku.</p>
+            <p>Kamu membuat hidup menjadi lebih indah, lebih bermakna, dan lebih penuh warna. Terima kasih telah menjadi bagian dari perjalanan hidupku dan menjadi alasan terbesar kebahagiaanku.</p>
             <p>Kamu adalah mimpi yang menjadi kenyataan. Setiap hari denganmu adalah anugerah yang aku syukuri dengan sepenuh hati. Aku berjanji untuk selalu ada untukmu, merawatmu, dan membuat hari-harimu penuh dengan kebahagiaan.</p>
             <p>Semoga hari ini penuh dengan kebahagiaan yang kamu layak terima, dan semoga setiap hari ke depan membawa keberuntungan, kesuksesan, dan cinta yang melimpah untuk dirimu.</p>
             <p>Selamat ulang tahun untuk orang yang paling aku cintai di dunia. 💗✨</p>
@@ -1395,48 +1521,43 @@
         // ===== AUDIO CONFIGURATION =====
         const audio = document.getElementById('bgMusic');
         const btn = document.getElementById('musicBtn');
+        const musicSplash = document.getElementById('musicSplash');
 
-        // Flag untuk track apakah music sudah dimulai
-        let musicStarted = false;
-
-        // Fungsi untuk memulai musik
-        function startMusic() {
-            if (!musicStarted) {
-                audio.play().catch((error) => {
-                    console.log('Autoplay blocked by browser - waiting for user interaction');
-                });
+        // Fungsi untuk mulai musik dan tutup splash
+        function startMusicAndCloseSplash() {
+            audio.play().then(() => {
+                musicSplash.classList.remove('show');
                 btn.classList.remove('muted');
                 btn.innerHTML = "🎵";
-                musicStarted = true;
-            }
+            }).catch((error) => {
+                console.log('Audio play error:', error);
+                alert('Maaf, musik tidak bisa diputar. Coba refresh halaman.');
+            });
         }
 
-        // Autoplay saat DOM sudah siap
-        document.addEventListener('DOMContentLoaded', function() {
-            startMusic();
-        });
+        // Fungsi untuk skip splash screen
+        function skipMusicSplash() {
+            musicSplash.classList.remove('show');
+            btn.classList.add('muted');
+            btn.innerHTML = "🔇";
+        }
 
-        // Backup: Autoplay saat user pertama kali berinteraksi (click atau scroll)
-        // Event listener ini akan dihapus setelah musik berhasil dimulai
-        document.addEventListener('click', startMusic, { once: true });
-        document.addEventListener('scroll', startMusic, { once: true });
+        // Musik loop
+        audio.loop = true;
 
         // Fungsi untuk toggle play/pause saat tombol musik diklik
         btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent triggering the single-use startMusic listener
+            e.stopPropagation();
             if (audio.paused) {
                 audio.play();
                 btn.classList.remove('muted');
-                btn.innerHTML = "🎵"; // Icon saat main
+                btn.innerHTML = "🎵";
             } else {
                 audio.pause();
                 btn.classList.add('muted');
-                btn.innerHTML = "🔇"; // Icon saat mute
+                btn.innerHTML = "🔇";
             }
         });
-
-        // Memastikan loop aktif
-        audio.loop = true;
 
         // ===== PAGE NAVIGATION =====
         function goToPage(pageName) {
