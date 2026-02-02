@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Celebration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF9F5;
+            --light-pink: #FFD1E8;
+            --pink: #FFC0D9;
+            --hot-pink: #FF9DB5;
+            --dark-pink: #FF6B95;
+            --very-dark-pink: #E94B7A;
+            --dark: #3D2E3D;
+            --red: #FF6B9D;
+            --teal: #B8A3C5;
+            --yellow: #FFE5B4;
+            --white: #FFFBF8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+        }
+
+
+
+        /* ===== BACK BUTTON ===== */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--hot-pink);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .back-button.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+            background: var(--dark-pink);
+        }
+
+        /* ===== FLOATING DECORATIONS ===== */
+        .floating-decoration {
+            position: absolute;
+            opacity: 1;
+            pointer-events: none;
+            animation: float-decoration 6s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Size variations - LEBIH EKSTREM */
+        .floating-decoration.size-1 { font-size: 1.2rem; }
+        .floating-decoration.size-2 { font-size: 1.8rem; }
+        .floating-decoration.size-3 { font-size: 2.5rem; }
+        .floating-decoration.size-4 { font-size: 3.5rem; }
+        .floating-decoration.size-5 { font-size: 4.5rem; }
+        .floating-decoration.size-6 { font-size: 5.5rem; }
+
+        @keyframes float-decoration {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .floating-decoration:nth-child(odd) {
+            animation-delay: 0s;
+        }
+
+        .floating-decoration:nth-child(2n) {
+            animation-delay: 0.5s;
+        }
+
+        .floating-decoration:nth-child(3n) {
+            animation-delay: 1s;
+        }
+
+        .floating-decoration:nth-child(4n) {
+            animation-delay: 1.5s;
+        }
+
+        .floating-decoration:nth-child(5n) {
+            animation-delay: 2s;
+        }
+
+        .floating-decoration:nth-child(6n) {
+            animation-delay: 2.5s;
+        }
+
+        /* ===== AUDIO CONTROL ===== */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--hot-pink);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            }
+            50% {
+                box-shadow: 0 10px 50px rgba(255, 107, 157, 0.6);
+            }
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+
+        .audio-control.muted {
+            background: #999;
+            animation: none;
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* ===== HOME PAGE ===== */
+        .page-home {
+            padding-top: 0;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            background: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 40px 20px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1300px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-text h2 {
+            font-size: 1.2rem;
+            color: #999;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--dark);
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text h1 span {
+            display: block;
+            color: var(--hot-pink);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: slideInRight 1s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .photo-placeholder {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #f5e6e0 0%, #fff5f7 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #ddd;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* CARDS SECTION */
+        .cards-section {
+            min-height: 100vh;
+            background: linear-gradient(90deg, 
+                #FFF9F5 0%, 
+                #FFE8F3 20%, 
+                #FFD1E8 40%, 
+                #FF9DB5 60%,
+                #FF7FA5 100%);
+            padding: 80px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .card {
+            aspect-ratio: 4/5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            background: transparent;
+        }
+
+        .card:nth-child(1) {
+            background: linear-gradient(135deg, #FFF9F5 0%, #FFE8F3 100%);
+        }
+
+        .card:nth-child(2) {
+            background: linear-gradient(135deg, #FFD1E8 0%, #FFC0D9 100%);
+        }
+
+        .card:nth-child(3) {
+            background: linear-gradient(135deg, #FF9DB5 0%, #FF8FA8 100%);
+        }
+
+        .card:nth-child(4) {
+            background: linear-gradient(135deg, #E94B7A 0%, #D63E6C 100%);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .card-emoji {
+            font-size: 5rem;
+            animation: float-emoji 3s ease-in-out infinite;
+        }
+
+        @keyframes float-emoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .card:hover .card-emoji {
+            animation: spin-emoji 0.6s ease-in-out;
+        }
+
+        @keyframes spin-emoji {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .card:nth-child(1) .card-title,
+        .card:nth-child(2) .card-title {
+            color: var(--dark);
+        }
+
+        .card:nth-child(3) .card-title,
+        .card:nth-child(4) .card-title {
+            color: white;
+        }
+
+        .card-button {
+            background: rgba(0, 0, 0, 0.1);
+            border: 2px solid currentColor;
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .card:nth-child(1) .card-button,
+        .card:nth-child(2) .card-button {
+            color: var(--dark);
+            border-color: var(--dark);
+        }
+
+        .card:nth-child(3) .card-button,
+        .card:nth-child(4) .card-button {
+            color: white;
+            border-color: white;
+        }
+
+        .card:hover .card-button {
+            background: rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* I'M SO GLAD SECTION */
+        .im-so-glad {
+            min-height: 100vh;
+            background: var(--cream);
+            padding: 100px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .im-so-glad-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        .im-so-glad-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .photo-placeholder-glad {
+            width: 400px;
+            height: 500px;
+            background: linear-gradient(135deg, #f5e6e0 0%, #fff5f7 100%);
+            border-radius: 20px;
+            border: 3px solid #ddd;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-placeholder-glad img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .im-so-glad-text h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .im-so-glad-text p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        /* ONCE AGAIN SECTION */
+        .once-again {
+            min-height: 100vh;
+            background: var(--cream);
+            padding: 100px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #eee;
+        }
+
+        .once-again-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        .once-again-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .once-again-frame {
+            width: 400px;
+            height: 500px;
+            background: white;
+            border: 20px solid var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .once-again-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .once-again-text h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .once-again-text p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        /* ===== COUPON PAGE ===== */
+        .page-coupon {
+            padding-top: 0;
+            background: var(--cream);
+            min-height: 100vh;
+        }
+
+        .coupon-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .coupon-section h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+        }
+
+        .terms {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .terms h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .terms p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, #FF6B95 0%, #FF5A88 100%);
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: linear-gradient(135deg, #FF5A88 0%, #FF4978 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-decline {
+            background: linear-gradient(135deg, #FFE8F3 0%, #FFD1E8 100%);
+            color: #3D2E3D;
+        }
+
+        .btn-decline:hover {
+            background: linear-gradient(135deg, #FFD1E8 0%, #FFC0D9 100%);
+            transform: translateY(-3px);
+        }
+
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .coupon-card {
+            display: grid;
+            grid-template-columns: 1fr 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .coupon-card:nth-child(1) {
+            grid-template-columns: 1fr 120px;
+        }
+
+        .coupon-main {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .coupon-card:nth-child(1) .coupon-main {
+            background: linear-gradient(135deg, #FF6B95 0%, #FF5A88 100%);
+            color: white;
+        }
+
+        .coupon-card:nth-child(2) .coupon-main {
+            background: linear-gradient(135deg, #E94B7A 0%, #D63E6C 100%);
+            color: white;
+        }
+
+        .coupon-card:nth-child(3) .coupon-main {
+            background: linear-gradient(135deg, #FFE5B4 0%, #FFDB9C 100%);
+            color: #3D2E3D;
+        }
+
+        .coupon-card:nth-child(4) .coupon-main {
+            background: linear-gradient(135deg, #B8A3C5 0%, #A391B8 100%);
+            color: white;
+        }
+
+        .coupon-card:nth-child(5) .coupon-main {
+            background: linear-gradient(135deg, #FF9DB5 0%, #FF8FA8 100%);
+            color: white;
+        }
+
+        .coupon-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .coupon-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .coupon-date {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .coupon-side {
+            padding: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: white;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            position: relative;
+        }
+
+        .coupon-card:nth-child(1) .coupon-side {
+            background: linear-gradient(135deg, #E94B7A 0%, #D63E6C 100%);
+        }
+
+        .coupon-card:nth-child(2) .coupon-side {
+            background: linear-gradient(135deg, #FF6B95 0%, #FF5A88 100%);
+        }
+
+        .coupon-card:nth-child(3) .coupon-side {
+            background: #F5E8E0;
+            color: #3D2E3D;
+        }
+
+        .coupon-card:nth-child(4) .coupon-side {
+            background: #E8DFF0;
+            color: #3D2E3D;
+        }
+
+        .coupon-card:nth-child(5) .coupon-side {
+            background: linear-gradient(135deg, #FF9DB5 0%, #FF8FA8 100%);
+        }
+
+        .coupon-hole {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--cream);
+            border-radius: 50%;
+        }
+
+        .coupon-hole.top {
+            top: 20px;
+            right: 20px;
+        }
+
+        .coupon-hole.bottom {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        /* ===== CROSSWORD PAGE ===== */
+        .page-crossword {
+            padding-top: 0;
+            background: var(--cream);
+            min-height: 100vh;
+        }
+
+        .crossword-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .crossword-section h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+        }
+
+        .crossword-intro {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .crossword-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .crossword-grid {
+            display: inline-block;
+            border: 3px solid var(--dark);
+        }
+
+        .crossword-row {
+            display: flex;
+        }
+
+        .crossword-cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            position: relative;
+        }
+
+        .crossword-cell.black {
+            background: var(--dark);
+        }
+
+        .crossword-cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: white;
+        }
+
+        .crossword-cell input:focus {
+            outline: none;
+            background: #fff9e6;
+        }
+
+        .crossword-cell.black input {
+            display: none;
+        }
+
+        .crossword-number {
+            font-size: 0.6rem;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-weight: bold;
+        }
+
+        .crossword-clues {
+            display: flex;
+            gap: 40px;
+        }
+
+        .clue-list {
+            flex: 1;
+        }
+
+        .clue-list h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .clue-item {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .clue-item strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .crossword-submit {
+            margin-top: 40px;
+        }
+
+        .crossword-submit button {
+            background: linear-gradient(135deg, #FF6B95 0%, #FF5A88 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .crossword-submit button:hover {
+            background: linear-gradient(135deg, #FF5A88 0%, #FF4978 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .crossword-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .crossword-result.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .crossword-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .hero-content,
+            .im-so-glad-content,
+            .once-again-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-text h1,
+            .im-so-glad-text h2,
+            .once-again-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .crossword-content {
+                grid-template-columns: 1fr;
+            }
+
+            .coupon-card {
+                grid-template-columns: 1fr !important;
+            }
+
+            .coupon-side {
+                writing-mode: horizontal-tb;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACK BUTTON -->
+    <button class="back-button" id="backButton" onclick="goToPage('home')">←</button>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicBtn" class="audio-control">🎵</button>
+
+    <!-- HOME PAGE -->
+    <div class="page page-home active">
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-5" style="top: 20%; left: 30%;">💝</div>
+            <div class="floating-decoration size-2" style="top: 30%; right: 30%;">✨</div>
+            <div class="floating-decoration size-4" style="bottom: 5%; left: 2%;">🎀</div>
+
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>HALO SEYA,</h2>
+                    <h1>SELAMAT<span>ULANG TAHUN! 🎂</span></h1>
+                </div>
+                <div class="hero-image">
+                    <div class="photo-placeholder">
+                        <!-- ===== EDIT HERO PHOTO DI SINI ===== -->
+                        <img src="header.png" alt="Hero Photo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARDS SECTION -->
+        <section class="cards-section">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-4" style="top: 14%; left: 3%;">🎉</div>
+             <div class="floating-decoration size-5" style="top: 13%; right: 25%;">🎀</div>
+            <div class="floating-decoration size-3" style="top: 10%; right: 1%;">✨</div>
+            <div class="floating-decoration size-5" style="bottom: 13%; left: 25%;">🎀</div>
+           
+
+            <div class="cards-grid">
+                <button class="card" onclick="openModal('letterModal')">
+                    <div class="card-content">
+                        <div class="card-emoji">💌</div>
+                        <h3 class="card-title">LETTER</h3>
+                    </div>
+                    <div class="card-button">READ IT</div>
+                </button>
+
+                <button class="card" onclick="goToPage('coupon')">
+                    <div class="card-content">
+                        <div class="card-emoji">🎟️</div>
+                        <h3 class="card-title">COUPONS</h3>
+                    </div>
+                    <div class="card-button">CLAIM THEM</div>
+                </button>
+
+                <button class="card" onclick="openModal('giftModal')">
+                    <div class="card-content">
+                        <div class="card-emoji">🎁</div>
+                        <h3 class="card-title">GIFT</h3>
+                    </div>
+                    <div class="card-button">CLICK TO OPEN</div>
+                </button>
+
+                <button class="card" onclick="goToPage('crossword')">
+                    <div class="card-content">
+                        <div class="card-emoji">❓</div>
+                        <h3 class="card-title">CROSSWORD</h3>
+                    </div>
+                    <div class="card-button">PLAY NOW</div>
+                </button>
+            </div>
+        </section>
+
+        <!-- I'M SO GLAD SECTION -->
+        <section class="im-so-glad">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-5" style="top: 5%; right: 6%;">🌸</div>
+            <div class="floating-decoration size-5" style="top: 10%; left: 15%;">🌸</div>
+            <div class="floating-decoration size-2" style="top: 50%; right: 1%;">💝</div>
+            <div class="floating-decoration size-4" style="bottom: 10%; left: 20%;">✨</div>
+
+            <div class="im-so-glad-content">
+                <div class="im-so-glad-text">
+                    <h2>AKU BEGITU<br>BERUNTUNG</h2>
+                    <p>memilikimu dalam hidupku, kamu memiliki hati emas dan jiwa yang memancarkan kehangatan serta kebaikan. Kamu adalah orang paling cantik yang pernah aku kenal, baik dari dalam maupun dari luar. 💕</p>
+                    <p>aku ingin meluangkan waktu untuk memberitahumu betapa berarti dirimu bagiku. Kamu adalah berkah terbesar dalam hidupku dan orang favorit di dunia ini.</p>
+                </div>
+                <div class="im-so-glad-image">
+                    <div class="photo-placeholder-glad">
+                        <div class="floating-decoration size-1">
+                             <!-- ===== EDIT I'M SO GLAD PHOTO DI SINI ===== -->
+                            <img src="header.png" alt="I'm So Glad Photo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONCE AGAIN SECTION -->
+        <section class="once-again">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-4" style="top: 4%; left: 3%;">🌹</div>
+            <div class="floating-decoration size-3" style="top: 30%; right: 4%;">💕</div>
+            <div class="floating-decoration size-5" style="bottom: 15%; left: 8%;">✨</div>
+             <div class="floating-decoration size-4" style="bottom: 5%; right: 10%;">✨</div>
+
+            <div class="once-again-content">
+                <div class="once-again-image">
+                    <div class="once-again-frame">
+                        <!-- ===== EDIT ONCE AGAIN PHOTO DI SINI ===== -->
+                        <img src="header.png" alt="Once Again Photo">
+                    </div>
+                </div>
+                <div class="once-again-text">
+                    <h2>SELAMANYA<br>BERSAMA<br>DIRIMU 💞</h2>
+                    <p>Selamat ulang tahun untuk cintaku, sahabat terbaikku, belahan jiwaku, dan partner petualanganku. Terima kasih sudah menjadi sahabat yang luar biasa, mencintaiku tanpa syarat, dan menjadi orang paling menakjubkan yang pernah aku temui.</p>
+                    <p>aku ingin memberikanmu semua cinta, kebahagiaan, dan kesuksesan di dunia. Semoga semua mimpi dan harapanmu terwujud, dan semoga tahun ini penuh dengan petualangan baru dan momen-momen tak terlupakan. aku tidak sabar untuk merayakan banyak ulang tahunmu lagi dan menciptakan kenangan indah bersama.</p>
+                    <p>semoga harimu penuh dengan kegembiraan dan cinta yang kamu layak dapatkan. Aku mencintaimu lebih dari yang bisa diekspresikan dengan kata-kata 💗</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- COUPON PAGE -->
+    <div class="page page-coupon">
+        <section class="coupon-section">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-5" style="top: 5%; left: 1%;">🎁</div>
+            <div class="floating-decoration size-2" style="top: 50%; right: 1%;">💝</div>
+            <div class="floating-decoration size-4" style="bottom: 5%; left: 2%;">⭐</div>
+
+            <h1>untuk hari istimewamu 💝</h1>
+            
+            <div class="terms">
+                <h3>Syarat & Ketentuan</h3>
+                <p>Mohon terima syarat dan ketentuan ini sebelum menggunakan kupon-kuponmu. Penawaran hanya berlaku untuk seseorang yang sangat spesial (yaitu dirimu 🥰). Aku tidak bertanggung jawab atas kupon yang hilang, tetapi aku mungkin merasa sedih dan memberikanmu sesuatu yang lebih untuk menggantinya (wink, wink 😉). Kupon dapat digabungkan untuk membuat mega-kupon yang lebih mengagumkan! Tanggal Kadaluarsa: Sehari sebelum ulang tahunmu tahun depan agar kita bisa melakukan hal-hal yang lebih menarik lagi. Kupon harus dipresentasikan kepadaku untuk ditukar. Kupon tidak memiliki nilai uang, tetapi memiliki nilai sentimen yang tak ternilai. 💕</p>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-accept">Setuju</button>
+                <button class="btn btn-decline">Tolak</button>
+            </div>
+
+            <div class="coupons-grid">
+                <div class="coupon-card">
+                    <div class="coupon-main">
+                        <div class="coupon-label">KUPON CINTA</div>
+                        <div class="coupon-title">MAKAN MALAM ROMANTIS</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-hole top"></div>
+                        <div class="coupon-hole bottom"></div>
+                    </div>
+                    <div class="coupon-side">001</div>
+                </div>
+
+                <div class="coupon-card">
+                    <div class="coupon-main">
+                        <div class="coupon-label">KUPON CINTA</div>
+                        <div class="coupon-title">SHOPPING SPREE GRATIS</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-hole top"></div>
+                        <div class="coupon-hole bottom"></div>
+                    </div>
+                    <div class="coupon-side">002</div>
+                </div>
+
+                <div class="coupon-card">
+                    <div class="coupon-main">
+                        <div class="coupon-label">KUPON CINTA</div>
+                        <div class="coupon-title">HADIAH PILIHAN KAMI</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-hole top"></div>
+                        <div class="coupon-hole bottom"></div>
+                    </div>
+                    <div class="coupon-side">003</div>
+                </div>
+
+                <div class="coupon-card">
+                    <div class="coupon-main">
+                        <div class="coupon-label">KUPON CINTA</div>
+                        <div class="coupon-title">LIBURAN AKHIR PEKAN</div>
+                        <div class="coupon-date">BERLAKU HINGGA APRIL 2026</div>
+                        <div class="coupon-hole top"></div>
+                        <div class="coupon-hole bottom"></div>
+                    </div>
+                    <div class="coupon-side">004</div>
+                </div>
+
+                <div class="coupon-card">
+                    <div class="coupon-main">
+                        <div class="coupon-label">KUPON CINTA</div>
+                        <div class="coupon-title">PELUKAN GRATIS SELAMANYA</div>
+                        <div class="coupon-date">BERLAKU SELAMANYA ✨</div>
+                        <div class="coupon-hole top"></div>
+                        <div class="coupon-hole bottom"></div>
+                    </div>
+                    <div class="coupon-side">005</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CROSSWORD PAGE -->
+    <div class="page page-crossword">
+        <section class="crossword-section">
+            <!-- DECORATIONS - JAUH TERPISAH SATU SAMA LAIN -->
+            <div class="floating-decoration size-4" style="top: 5%; left: 1%;">🎮</div>
+            <div class="floating-decoration size-4" style="top: 10%; right: 7%;">🎮</div>
+            <div class="floating-decoration size-3" style="top: 50%; right: 2%;">🎯</div>
+            <div class="floating-decoration size-5" style="bottom: 5%; left: 2%;">✨</div>
+             <div class="floating-decoration size-5" style="bottom: 7%; right: 15%;">✨</div>
+
+            <h1>Pecahkan Teka-Teki Ini! 🎮</h1>
+            
+            <div class="crossword-intro">
+                <p><strong>Hai Sayangku! Selamat datang di sisi bermain website ini! 💝</strong></p>
+                <p>untuk membuat semuanya lebih spesial, aku membuat pertanyaan dalam bentuk teka-teki silang. kuharap kamu menikmati permainannya dan setiap jawaban akan membuat perasaan kita semakin dekat 💕</p>
+            </div>
+
+            <div class="crossword-content">
+                <div>
+                    <div style="display: inline-block; border: 3px solid var(--dark); background: white;">
+                        <div style="display: grid; grid-template-columns: repeat(9, 40px);">
+                            <!-- Row 1: CAKE (4 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">1</span><input type="text" data-clue="1" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="1" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="1" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="1" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            
+                            <!-- Row 2: LOVE (4 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">2</span><input type="text" data-clue="2" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="2" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="2" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="2" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            
+                            <!-- Row 3: PINK (4 huruf) -->
+                            <div class="crossword-cell"><span class="crossword-number">3</span><input type="text" data-clue="3" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="3" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="3" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="3" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">4</span><input type="text" data-clue="4" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="4" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="4" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="4" maxlength="1"></div>
+                            
+                            <!-- Row 4: LAUGH (5 huruf) -->
+                            <div class="crossword-cell"><span class="crossword-number">5</span><input type="text" data-clue="5" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="5" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="5" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="5" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="5" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            
+                            <!-- Row 5: CUDDLE (6 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">6</span><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="6" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">7</span><input type="text" data-clue="7" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="7" maxlength="1"></div>
+                            
+                            <!-- Row 6: BISCUIT (7 huruf) -->
+                            <div class="crossword-cell"><span class="crossword-number">8</span><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="8" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="9" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="9" maxlength="1"></div>
+                            
+                            <!-- Row 7: BABY (4 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">9</span><input type="text" data-clue="9" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="9" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="9" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="9" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="7" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="7" maxlength="1"></div>
+                            
+                            <!-- Row 8: TITANIC (7 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">10</span><input type="text" data-clue="10" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="10" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="10" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="10" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="10" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="10" maxlength="1"></div>
+                            
+                            <!-- Row 9: APRIL (5 huruf) -->
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell"><span class="crossword-number">11</span><input type="text" data-clue="11" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="11" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="11" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="11" maxlength="1"></div>
+                            <div class="crossword-cell"><input type="text" data-clue="11" maxlength="1"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                            <div class="crossword-cell black"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="crossword-submit" style="margin-top: 30px;">
+                        <button onclick="checkAnswers()">CEK JAWABAN</button>
+                        <div class="crossword-result" id="result"></div>
+                    </div>
+                </div>
+
+                <div class="crossword-clues">
+                    <div class="clue-list">
+                        <h3>MENDATAR</h3>
+                        <div class="clue-item"><strong>3.</strong> warna yang kamu sukai (4 huruf)</div>
+                        <div class="clue-item"><strong>4.</strong> tanggal pertama kita jadian (8 huruf)</div>
+                        <div class="clue-item"><strong>5.</strong> hal yang kita lakukan setiap hari (5 huruf)</div>
+                        <div class="clue-item"><strong>8.</strong> snack favorit kita (7 huruf)</div>
+                        <div class="clue-item"><strong>11.</strong> bulan favorit kita (5 huruf)</div>
+                    </div>
+                    <div class="clue-list">
+                        <h3>MENURUN</h3>
+                        <div class="clue-item"><strong>1.</strong> kue ulang tahun (4 huruf)</div>
+                        <div class="clue-item"><strong>2.</strong> hadiah istimewa (4 huruf)</div>
+                        <div class="clue-item"><strong>6.</strong> untuk tidur yang nyenyak bersama (6 huruf)</div>
+                        <div class="clue-item"><strong>7.</strong> film pertama kita nonton (7 huruf)</div>
+                        <div class="clue-item"><strong>9.</strong> panggilan sayang favoritmu (4 huruf)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODALS -->
+    <div id="letterModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('letterModal')">×</button>
+            <h2>💌 SURAT CINTA</h2>
+            <p>Sayang,</p>
+            <p>Di hari yang istimewa ini, aku ingin mengatakan bahwa kamu adalah hadiah terbesar dalam hidupku. Setiap senyum, setiap tawa, setiap momen bersama kamu adalah kenangan yang akan aku hargai selamanya. 💕</p>
+            <p>Kamu membuat hidup menjadi lebih indah, lebih bermakna, dan lebih penuh warna. Terima kasih telah menjadi bagian dari perjalanan hidupku dan menjadi salah satu alasan terbesar kebahagiaanku.</p>
+            <p>Kamu adalah mimpi yang menjadi kenyataan. Setiap hari denganmu adalah anugerah yang aku syukuri dengan sepenuh hati. Aku berjanji untuk selalu ada untukmu, merawatmu, dan membuat hari-harimu penuh dengan kebahagiaan.</p>
+            <p>Semoga hari ini penuh dengan kebahagiaan yang kamu layak terima, dan semoga setiap hari ke depan membawa keberuntungan, kesuksesan, dan cinta yang melimpah untuk dirimu.</p>
+            <p>Selamat ulang tahun untuk orang yang paling aku cintai di dunia. 💗✨</p>
+        </div>
+    </div>
+
+    <div id="giftModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('giftModal')">×</button>
+            <h2>🎁 HADIAH ISTIMEWA</h2>
+            <p><strong>Hadiah Utama:</strong> Semua momen indah dan kenangan berharga bersama orang yang kamu cintai selamanya 💝</p>
+            <p>Semoga di tahun ini, kamu merasakan kebahagiaan yang sejati dan bermakna. Hadiah terbaik adalah senyuman dan kebahagiaan yang tersirat di wajahmu yang cantik. ✨</p>
+            <p>Aku ingin memberikan kamu hadiah yang lebih dari sekedar materi - hadiah adalah waktu berkualitas, perhatian penuh, kasih sayang yang tulus, dan cinta tanpa batas dari hati kami. Setiap hari bersama dirimu adalah hadiah istimewa untuk kami. 💗</p>
+            <p>Mari kita ciptakan lebih banyak momen indah, petualangan seru, dan kenangan yang akan kita ceritakan kepada orang-orang terkasih. Terima kasih telah menjadi bagian yang paling spesial dan berarti dalam hidupku. Aku mencintaimu dengan sepenuh hati. 💕</p>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #FFD1E8 0%, #FFC0D9 100%);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(255, 107, 157, 0.25);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+
+    <script>
+        // ===== AUDIO CONFIGURATION =====
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicBtn');
+
+        // Flag untuk track apakah music sudah dimulai
+        let musicStarted = false;
+
+        // Fungsi untuk memulai musik
+        function startMusic() {
+            if (!musicStarted) {
+                audio.play().catch((error) => {
+                    console.log('Autoplay blocked by browser - waiting for user interaction');
+                });
+                btn.classList.remove('muted');
+                btn.innerHTML = "🎵";
+                musicStarted = true;
+            }
+        }
+
+        // Autoplay saat DOM sudah siap
+        document.addEventListener('DOMContentLoaded', function() {
+            startMusic();
+        });
+
+        // Backup: Autoplay saat user pertama kali berinteraksi (click atau scroll)
+        // Event listener ini akan dihapus setelah musik berhasil dimulai
+        document.addEventListener('click', startMusic, { once: true });
+        document.addEventListener('scroll', startMusic, { once: true });
+
+        // Fungsi untuk toggle play/pause saat tombol musik diklik
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent triggering the single-use startMusic listener
+            if (audio.paused) {
+                audio.play();
+                btn.classList.remove('muted');
+                btn.innerHTML = "🎵"; // Icon saat main
+            } else {
+                audio.pause();
+                btn.classList.add('muted');
+                btn.innerHTML = "🔇"; // Icon saat mute
+            }
+        });
+
+        // Memastikan loop aktif
+        audio.loop = true;
+
+        // ===== PAGE NAVIGATION =====
+        function goToPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.querySelector('.page-' + pageName).classList.add('active');
+            window.scrollTo(0, 0);
+
+            // Show/hide back button
+            const backBtn = document.getElementById('backButton');
+            if (pageName === 'home') {
+                backBtn.classList.remove('show');
+            } else {
+                backBtn.classList.add('show');
+            }
+        }
+
+        // ===== MODAL FUNCTIONS =====
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        }
+
+        // ===== CROSSWORD GAME =====
+        const correctAnswers = {
+            '1': 'CAKE',      // DOWN - 4 huruf
+            '2': 'LOVE',      // DOWN - 4 huruf
+            '3': 'PINK',      // ACROSS - 4 huruf
+            '4': 'DECEMBER',  // ACROSS - 8 huruf
+            '5': 'LAUGH',     // ACROSS - 5 huruf
+            '6': 'CUDDLE',    // DOWN - 6 huruf
+            '7': 'TITANIC',   // DOWN - 7 huruf
+            '8': 'BISCUIT',   // ACROSS - 7 huruf
+            '9': 'BABY',      // DOWN - 4 huruf
+            '10': 'TITANIC',  // DOWN - 7 huruf (sama dengan 7)
+            '11': 'APRIL'     // ACROSS - 5 huruf
+        };
+
+        function checkAnswers() {
+            const result = document.getElementById('result');
+            let correctCount = 0;
+            let totalQuestions = 11;
+            
+            for (let clue in correctAnswers) {
+                const inputs = document.querySelectorAll(`input[data-clue="${clue}"]`);
+                let answer = '';
+                inputs.forEach(input => {
+                    answer += input.value.toUpperCase();
+                });
+                
+                if (answer === correctAnswers[clue]) {
+                    correctCount++;
+                }
+            }
+
+            if (correctCount === totalQuestions) {
+                result.className = 'crossword-result success';
+                result.textContent = '🎉 Wah, luar biasa! Kamu berhasil menjawab semuanya dengan benar! Ambil screenshotnya dan kirim ke aku yaa 💕';
+            } else {
+                result.className = 'crossword-result error';
+                result.textContent = `❌ Kamu berhasil menjawab ${correctCount}/${totalQuestions} soal dengan benar. Coba lagi sayangku! 😊`;
+            }
+        }
+    </script>
+
+</body>
+</html>
